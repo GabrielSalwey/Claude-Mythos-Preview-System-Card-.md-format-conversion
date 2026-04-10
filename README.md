@@ -28,16 +28,29 @@ Conversion used **[pymupdf4llm](https://pymupdf4llm.readthedocs.io/)** v1.27.2,
 a lightweight library designed for producing LLM-ready markdown from PDFs.
 The core conversion is three lines of Python; it handled paragraph joining,
 heading detection from font size/weight, italic/bold preservation, and table
-rendering out of the box. Light post-processing fixed ligatures (`ﬁ` → `fi`),
-corrected heading levels based on section numbering depth, removed page number
-artifacts, and patched six stuck footnote superscripts.
+rendering out of the box.
+
+Post-processing included:
+
+- Fixed ligatures (`ﬁ` → `fi`)
+- Corrected heading levels based on section numbering depth
+- Removed page number artifacts
+- Patched six stuck footnote superscripts
+- Reformatted two appendix code listings (blocklist and SWE-bench test list)
+  that pymupdf4llm flattened into single lines, and removed stray `None`
+  artifacts at the head of each
+- Fixed one typo in the source PDF (`justifed` → `justified`)
 
 All 81 figures were described manually: each page containing a figure was
 rasterized at 150 DPI using `pdftoppm`, then inspected using Claude Opus 4.6's
 vision capability. Descriptions appear as `> **[Visual: ...]**` blockquotes
 after each figure caption and include chart type, axis labels, values where
-readable, model comparisons, and key takeaways. This was the most labor-intensive
-part of the conversion.
+readable, model comparisons, and key takeaways. This was the most
+labor-intensive part of the conversion.
+
+A short provenance header is included at the top of the markdown file so the
+source and copyright status travel with the document when it's used outside
+this repo.
 
 ## Known limitations
 
@@ -51,4 +64,4 @@ part of the conversion.
 The content of this document is Anthropic's. This repository provides only
 a format conversion for research accessibility purposes, with no commercial
 intent. If Anthropic requests removal, this repository will be taken down
-promptly. Please open an issue or contact [your email] to flag any concerns.
+promptly. Please open an issue or contact [my email] to flag any concerns.
